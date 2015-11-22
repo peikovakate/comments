@@ -1,4 +1,8 @@
 <?php
+$path = dirname(__DIR__);
+include_once $path.'/Model/ChooseSqlRequest.php';
+include_once $path.'/Model/SqlRequest.php';
+include_once $path.'/Model/SqlSelectRequest.php';
 class View {
   static private function _form_add_comment(){
     $form = '<form method="post" action="/comments/Model/add_comment_to_file.php" id="post_comment">';
@@ -39,11 +43,9 @@ class View {
   }
 
   static private function _show_comments() {
-    $str = '';
-    $conn = new mysqli("localhost", "root", "root", "comments");
-    $sql = "SELECT username, text FROM comments";
-    $result = $conn->query($sql);
-    $conn->close();
+    $request = ChooseSqlRequest::choose('SqlSelectRequest');
+    $result = $request->doRequest('');
+    $str='';
     foreach ($result as $comment) {
       $str .= self::_show_comment($comment);
     }

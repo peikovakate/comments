@@ -1,3 +1,3 @@
 <?php
-  include "Controller/Controller.php";
+  include_once "Controller/Controller.php";
   echo Controller::returnView();

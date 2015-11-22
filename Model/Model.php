@@ -1,26 +1,14 @@
 <?php
+include_once 'ChooseSqlRequest.php';
 class Model {
-    static function delete_all_comments($argc){
-      $conn = new mysqli("localhost", "root", "root", "comments");
-
-      $sql = "DELETE FROM comments;";
-      $conn->query($sql);
-      $conn->close();
+    static function delete_all_comments($args){
+      $request = ChooseSqlRequest::choose('SqlDeleteRequest');
+      $request -> doRequest($args);
     }
 
     static public function add_comment_to_file($args){
-      $text_comment = $args[0];
-      $user_name  = $args[1];
-
-      $text_comment = filter_var($text_comment, FILTER_SANITIZE_STRING);
-      $user_name = filter_var($user_name, FILTER_SANITIZE_STRING);
-
-      $conn = new mysqli("localhost", "root", "root", "comments");
-
-      $sql = "INSERT INTO comments (username, text)
-        VALUES ('$user_name', '$text_comment')";
-      $conn->query($sql);
-      $conn->close();
+      $request = ChooseSqlRequest::choose('SqlAddRequest');
+      $request -> doRequest($args);
     }
 
   }
