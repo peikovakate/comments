@@ -1,12 +1,7 @@
 <?php
 class Model {
     static function delete_all_comments($argc){
-      $servername = "localhost";
-      $username = "root";
-      $password = "root";
-      $databaseName = "comments";
-
-      $conn = new mysqli($servername, $username, $password, $databaseName);
+      $conn = new mysqli("localhost", "root", "root", "comments");
 
       $sql = "DELETE FROM comments;";
       $conn->query($sql);
@@ -20,11 +15,7 @@ class Model {
       $text_comment = filter_var($text_comment, FILTER_SANITIZE_STRING);
       $user_name = filter_var($user_name, FILTER_SANITIZE_STRING);
 
-      $servername = "localhost";
-      $username = "root";
-      $password = "root";
-      $databaseName = "comments";
-      $conn = new mysqli($servername, $username, $password, $databaseName);
+      $conn = new mysqli("localhost", "root", "root", "comments");
 
       $sql = "INSERT INTO comments (username, text)
         VALUES ('$user_name', '$text_comment')";
