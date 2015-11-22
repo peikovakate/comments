@@ -40,13 +40,7 @@ class View {
 
   static private function _show_comments() {
     $str = '';
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
-    $databaseName = "comments";
-
-    $conn = new mysqli($servername, $username, $password, $databaseName);
-
+    $conn = new mysqli("localhost", "root", "root", "comments");
     $sql = "SELECT username, text FROM comments";
     $result = $conn->query($sql);
     $conn->close();
