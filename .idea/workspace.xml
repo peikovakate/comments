@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82de18ff-2c52-45eb-90a3-94aff4073a72" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Model/ChooseSqlRequest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Model/SqlAddRequest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Model/SqlDeleteRequest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Model/SqlRequest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Model/SqlSelectRequest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Controller/Controller.php" afterPath="$PROJECT_DIR$/Controller/Controller.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model/Model.php" afterPath="$PROJECT_DIR$/Model/Model.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model/add_comment_to_file.php" afterPath="$PROJECT_DIR$/Model/add_comment_to_file.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model/delete_all_comments.php" afterPath="$PROJECT_DIR$/Model/delete_all_comments.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/View.php" afterPath="$PROJECT_DIR$/View/View.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
     </list>
     <ignored path="comments.iws" />
     <ignored path=".idea/workspace.xml" />
