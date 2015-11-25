@@ -1,6 +1,4 @@
 <?php
-
-include_once dirname(__DIR__) . '/Model/SqlConnection.php';
 class View {
   static private function _form_add_comment(){
     $form = '<form method="post" action="/comments/Model/add_comment_to_file.php" id="post_comment">';
