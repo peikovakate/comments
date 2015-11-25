@@ -1,14 +1,19 @@
 <?php
-include_once 'ChooseSqlRequest.php';
+require_once 'SqlConnection.php';
+
 class Model {
-    static function delete_all_comments($args){
-      $request = ChooseSqlRequest::choose('SqlDeleteRequest');
-      $request -> doRequest($args);
+    private $sqlConn;
+    public function __construct($conn)
+    {
+      $this->sqlConn = $conn;
     }
 
-    static public function add_comment_to_file($args){
-      $request = ChooseSqlRequest::choose('SqlAddRequest');
-      $request -> doRequest($args);
+  public function delete_all_comments($args){
+      $this->sqlConn->delete('');
+    }
+
+    public function add_comment_to_file($args){
+      $this->sqlConn->add($args);
     }
 
   }

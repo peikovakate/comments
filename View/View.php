@@ -1,8 +1,6 @@
 <?php
-$path = dirname(__DIR__);
-include_once $path.'/Model/ChooseSqlRequest.php';
-include_once $path.'/Model/SqlRequest.php';
-include_once $path.'/Model/SqlSelectRequest.php';
+
+include_once dirname(__DIR__) . '/Model/SqlConnection.php';
 class View {
   static private function _form_add_comment(){
     $form = '<form method="post" action="/comments/Model/add_comment_to_file.php" id="post_comment">';
@@ -29,9 +27,9 @@ class View {
     return $head;
   }
 
-  static private function _build_body(){
+  static private function _build_body($conn){
     $body = '<body>';
-    $body .= self::_show_comments();
+    $body .= self::_show_comments($conn);
     $body .= self::_form_add_comment();
     $body .= self::_form_delete_comments();
     $body .= '</body></html>';
@@ -42,19 +40,18 @@ class View {
     return '<span style="font-weight: bold; font-family: Verdana, Arial, Helvetica, sans-serif;"> '.$comment['username'].':</span> '.$comment['text'].'<br />';
   }
 
-  static private function _show_comments() {
-    $request = ChooseSqlRequest::choose('SqlSelectRequest');
-    $result = $request->doRequest('');
+  static private function _show_comments($conn) {
+    $result = $conn->select('');
     $str='';
-    foreach ($result as $comment) {
-      $str .= self::_show_comment($comment);
+      foreach ($result as $comment) {
+     $str .= self::_show_comment($comment);
     }
     return $str;
   }
 
-  static public function run(){
+  static public function run($conn){
     $html =  self::_build_head();
-    $html .= self::_build_body();
+    $html .= self::_build_body($conn);
     return $html;
   }
 
