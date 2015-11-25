@@ -25,31 +25,20 @@ class View {
     return $head;
   }
 
-  static private function _build_body($conn){
+  static private function _build_body($str){
     $body = '<body>';
-    $body .= self::_show_comments($conn);
+    $body .= $str;
     $body .= self::_form_add_comment();
     $body .= self::_form_delete_comments();
     $body .= '</body></html>';
     return $body;
   }
 
-  static private function _show_comment($comment){
-    return '<span style="font-weight: bold; font-family: Verdana, Arial, Helvetica, sans-serif;"> '.$comment['username'].':</span> '.$comment['text'].'<br />';
-  }
 
-  static private function _show_comments($conn) {
-    $result = $conn->select('');
-    $str='';
-      foreach ($result as $comment) {
-     $str .= self::_show_comment($comment);
-    }
-    return $str;
-  }
 
-  static public function run($conn){
+  static public function run($str){
     $html =  self::_build_head();
-    $html .= self::_build_body($conn);
+    $html .= self::_build_body($str);
     return $html;
   }
 
