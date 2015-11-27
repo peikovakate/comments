@@ -1,6 +1,6 @@
 <?php
 include_once 'SqlConnection.php';
-class Model {
+class Comment {
   public static function delete_all_comments($args){
       SqlConnection::delete('');
     }

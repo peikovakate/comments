@@ -9,7 +9,6 @@ class SqlConnection
     }
     return self::$conn;
   }
-
   public static function add($args){
     $sql = "INSERT INTO comments (username, text)
         VALUES ('$args[0]', '$args[1];')";
@@ -23,12 +22,6 @@ class SqlConnection
   public static function delete($args){
     $sql = "DELETE FROM comments;";
     self::getConnection()->query($sql);
-  }
-  public function __toString()
-  {
-    $str ='';
-    $str.=self::$conn->thread_id;
-    return $str;
   }
    private function __clone()
   {

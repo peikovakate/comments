@@ -1,7 +1,7 @@
 <?php
 class View {
   static private function _form_add_comment(){
-    $form = '<form method="post" action="/comments/Model/add_comment_to_file.php" id="post_comment">';
+    $form = '<form method="post" action="/Model/add_comment_to_file.php" id="post_comment">';
     $form .= '<input type="text" name="user_name" placeholder="User name" size="6">';
     $form .= '<input type="text" style="font-family: Verdana, Arial, Helvetica, sans-serif" name="comment" placeholder="Comment..."/>';
     $form .= '<input  type="submit" value="Send">
@@ -10,7 +10,7 @@ class View {
   }
 
   static private function _form_delete_comments(){
-    $form = '<form method="post" action="/comments/Model/delete_all_comments.php" id="delete_comments">';
+    $form = '<form method="post" action="/Model/delete_all_comments.php" id="delete_comments">';
     $form .= '<input  type="submit" name="delete" value="Delete">
     </form>';
     return $form;
@@ -33,8 +33,6 @@ class View {
     $body .= '</body></html>';
     return $body;
   }
-
-
 
   static public function run($str){
     $html =  self::_build_head();
