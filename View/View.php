@@ -1,43 +1,60 @@
 <?php
+
 class View {
-  static private function _form_add_comment(){
-    $form = '<form method="post" action="/Model/add_comment_to_file.php" id="post_comment">';
-    $form .= '<input type="text" name="user_name" placeholder="User name" size="6">';
-    $form .= '<input type="text" style="font-family: Verdana, Arial, Helvetica, sans-serif" name="comment" placeholder="Comment..."/>';
-    $form .= '<input  type="submit" value="Send">
-     </form>';
+  static private function formAddComment(){
+    $form = '<form method="post" id="postComment" onsubmit="addComm(); return false;">';
+    $form .= '<input type="text" id="username" name="user_name" placeholder="Username" size="6">';
+    $form .= '<input type="text" id="text" name="comment" placeholder="Comment..."/>';
+    $form .= '<input  type="submit" value="Send" class="btn-success" id="addComment">';
+    $form .= '</form>';
     return $form;
   }
 
-  static private function _form_delete_comments(){
-    $form = '<form method="post" action="/Model/delete_all_comments.php" id="delete_comments">';
-    $form .= '<input  type="submit" name="delete" value="Delete">
-    </form>';
-    return $form;
+  static private function buildTable($arrayOfComments){
+    $str = '<table class = "table table-striped table-hover" id="table"><tbody>';
+    $str .= '<tr id="tr0"></tr>';
+     foreach($arrayOfComments as $c){
+      $str .= self::buildTr($c);
+    }
+    $str .= '</tbody></table>';
+    return $str;
   }
 
-  static private function _build_head() {
-    $head = '<html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <title>Add Your Comment!</title>
-    </head>';
+  static public function buildTr($comment){
+    $str = '<tr id="tr'.$comment["id"].'"><td>'.$comment["username"].':</td><td>'.$comment["text"].'</td><td>';
+    $str .= '<button class="btn-warning" id="'.$comment["id"].'" onclick="deleteComment(this.id)">Delete</button></td></tr>';
+    return $str;
+  }
+  static private function buildHead() {
+    $head = '<html lang="en">';
+    $head .= '<head>';
+    $head .= '<link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">';
+    $head .= '<script src="../lib/jquery/jquery-2.1.4.js"></script>';
+    $head .= '<script src="../js/commentActions.js"></script>';
+    $head .= '<meta charset="UTF-8">';
+    $head .= '<title>Add Your Comment!</title>';
+    $head .= '</head>';
     return $head;
   }
 
-  static private function _build_body($str){
+  static private function buildBody($arrayOfComments){
     $body = '<body>';
-    $body .= $str;
-    $body .= self::_form_add_comment();
-    $body .= self::_form_delete_comments();
-    $body .= '</body></html>';
+    $body .= '<div class="row">';
+    $body .= '<div class = "col-md-5">';
+    $body .= self::formAddComment();
+    $body .= '<button id="Delete all" class="btn-warning" onclick="deleteComment(this.id)">Delete All</button>';
+    $body .= '</div><div class = "col-md-7">';
+    $body .= self::buildTable($arrayOfComments);
+    $body .= '</div></div></body></html>';
     return $body;
   }
 
-  static public function run($str){
-    $html =  self::_build_head();
-    $html .= self::_build_body($str);
+  static public function run($arrayOfComments){
+    $html =  self::buildHead();
+    $html .= self::buildBody($arrayOfComments);
     return $html;
   }
+
+
 
 }

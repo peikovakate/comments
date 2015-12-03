@@ -6,29 +6,41 @@ class SqlConnection
     if (null === self::$conn)
     {
       self::$conn = new mysqli("localhost", "root", "root", "comments");
+      return self::$conn;
     }
     return self::$conn;
   }
   public static function add($args){
     $sql = "INSERT INTO comments (username, text)
-        VALUES ('$args[0]', '$args[1];')";
+        VALUES ('$args[1]', '$args[0]')";
     self::getConnection()->query($sql);
   }
+
+  public static function getLastComment(){
+    $sql = "SELECT * FROM comments ORDER BY id DESC LIMIT 0, 1";
+    $result = self::getConnection()->query($sql);
+    $a = $result->fetch_row();
+    $a = $a[0];
+    return $a;
+  }
+
   public static function select($args){
-    $sql = "SELECT username, text FROM comments";
+    $sql = '';
+    if ($args=='all'){
+      $sql .= "SELECT * FROM comments ORDER BY id DESC";
+    }else{
+      $sql .= "SELECT * FROM comments ORDER BY id DESC LIMIT 0, 1";
+    }
     $result = self::getConnection()->query($sql);
     return $result;
   }
   public static function delete($args){
-    $sql = "DELETE FROM comments;";
+    if ($args=="Delete all"){
+      $sql = "DELETE FROM comments;";
+    }else {
+      $sql = "DELETE FROM comments WHERE id = ".$args." ;";
+    }
     self::getConnection()->query($sql);
   }
-   private function __clone()
-  {
 
-  }
-  private function  __destruct()
-  {
-    self::$conn->close();
-  }
 }

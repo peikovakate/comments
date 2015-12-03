@@ -1,23 +1,16 @@
 <?php
 include_once 'SqlConnection.php';
 class Comment {
-  public static function delete_all_comments($args){
-      SqlConnection::delete('');
+  public static function deleteComment($args){
+      SqlConnection::delete($args);
     }
-  public static function add_comment_to_file($args){
+  public static function addCommentToDB($args){
       $args[0] = filter_var($args[0], FILTER_SANITIZE_STRING);
       $args[1] = filter_var($args[1], FILTER_SANITIZE_STRING);
       SqlConnection::add($args);
     }
-  static private function buildComment($comment){
-    return '<span style="font-weight: bold; font-family: Verdana, Arial, Helvetica, sans-serif;"> '.$comment['username'].':</span> '.$comment['text'].'<br />';
-  }
   public static function getComments($args) {
-    $result = SqlConnection::select('');
-    $str='';
-    foreach ($result as $comment) {
-      $str .= self::buildComment($comment);
-    }
-    return $str;
+    $result = SqlConnection::select('all');
+    return $result;
   }
   }
