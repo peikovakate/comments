@@ -3,4 +3,4 @@
   include_once $path.'/Controller/Controller.php';
   $args = $_REQUEST['arg'];
   Controller::getControl('deleteComment', $args);
-  echo '';
+  echo '<tr id="tr0"></id>';
