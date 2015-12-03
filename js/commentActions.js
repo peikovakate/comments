@@ -1,11 +1,16 @@
-function deleteComment(id){
+$(document).on("click", function(){
+    $(".row:gt(6)").hide();
+
+})
+
+function deleteComment(id) {
     var response = confirm('Are you sure?');
     if (response == true) {
         var idToDelete;
         if (id == "Delete all") {
-            idToDelete = "table";
+            idToDelete = "column";
         } else {
-            idToDelete = "tr" + id;
+            idToDelete = "row" + id;
         }
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -17,15 +22,16 @@ function deleteComment(id){
         xhttp.send();
     }
 }
-function addComm(){
+
+function addComm() {
     var msg =  $("#postComment").serialize();
     $.ajax({
         type: 'POST',
         url: '../Model/addComment.php',
         data: msg,
         success: function(data){
-            data = '<tr id="tr0"></tr>' + data;
-            $("#tr0").replaceWith(data);
+            data = '<div class="row" id="row0"></div>' + data;
+            $("#row0").replaceWith(data);
             document.getElementById("postComment").reset();
         }
 

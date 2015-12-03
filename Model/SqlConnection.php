@@ -2,7 +2,7 @@
 class SqlConnection
 {
   private static $conn;
-  public static function getConnection(){
+  public static function getConnection() {
     if (null === self::$conn)
     {
       self::$conn = new mysqli("localhost", "root", "root", "comments");
@@ -10,13 +10,13 @@ class SqlConnection
     }
     return self::$conn;
   }
-  public static function add($args){
+  public static function add($args) {
     $sql = "INSERT INTO comments (username, text)
         VALUES ('$args[1]', '$args[0]')";
     self::getConnection()->query($sql);
   }
 
-  public static function getLastComment(){
+  public static function getLastComment() {
     $sql = "SELECT * FROM comments ORDER BY id DESC LIMIT 0, 1";
     $result = self::getConnection()->query($sql);
     $a = $result->fetch_row();
@@ -24,7 +24,7 @@ class SqlConnection
     return $a;
   }
 
-  public static function select($args){
+  public static function select($args) {
     $sql = '';
     if ($args=='all'){
       $sql .= "SELECT * FROM comments ORDER BY id DESC";
@@ -34,7 +34,8 @@ class SqlConnection
     $result = self::getConnection()->query($sql);
     return $result;
   }
-  public static function delete($args){
+
+  public static function delete($args) {
     if ($args=="Delete all"){
       $sql = "DELETE FROM comments;";
     }else {
@@ -42,5 +43,4 @@ class SqlConnection
     }
     self::getConnection()->query($sql);
   }
-
 }
