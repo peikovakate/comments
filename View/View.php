@@ -1,7 +1,8 @@
 <?php
 
-class View {
-    static public function run($arrayOfComments) {
+class View
+{
+  static public function run($arrayOfComments) {
     $html = self::buildHead();
     $html .= self::buildBody($arrayOfComments);
     return $html;
@@ -31,20 +32,19 @@ class View {
     $body .= self::modalAddComment();
     $body .= '<br>';
     $body .= '<button id="Delete all" class="btn btn-warning" onclick="deleteComment(this.id)">Delete All</button>';
-    $body .= '</div><div class = "col-md-7" id="column">';
-    $body .= self::buildContainerWithComments($arrayOfComments);
-    $body .= '</div></div></div></div></body></html>';
+    $body .= self::buildColumnWithComments($arrayOfComments);
+    $body .= '</div></div></div></body></html>';
     return $body;
   }
 
   static private function modalAddComment() {
-    $form = '<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Add your comment!</button>';
-    $form .= '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">';
+    $form = '<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addCommentModal">Add your comment!</button>';
+    $form .= '<div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">';
     $form .= '<div class="modal-dialog" role="document">';
     $form .= '<div class="modal-content">';
     $form .= '<div class="modal-header">';
     $form .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-    $form .= '<h4 class="modal-title" id="myModalLabel">Fill form</h4></div>';
+    $form .= '<h4 class="modal-title" id="addCommentModal">Fill form</h4></div>';
     $form .= '<div class="modal-body">';
     $form .= '<form method="post" id="postComment" onsubmit="addComm();return false;">';
     $form .= '<input type="text" id="username" class="input-sm" name="user_name" placeholder="Username" size="6">';
@@ -54,26 +54,25 @@ class View {
     return $form;
   }
 
-  static private function buildContainerWithComments($arrayOfComments) {
-    $str = '<div class="row" id="row0"></div>';
+  static private function buildColumnWithComments($arrayOfComments) {
+    $str = '</div><div class = "col-md-7" id="column">';
+    $str .= '<div class="row" id="row0"></div>';
     foreach ($arrayOfComments as $c) {
       $str .= self::buildTr($c);
     }
-    return $str;
-  }
+    $str .= '<button id="showMoreBtn" class="btn btn-default" style="display: none">Show more</button>';
+    $str .= '<button id="showLessBtn" class="btn btn-default" style="display: none">Show less</button>';
+    $str .= '</div>';
+      return $str;
+    }
 
   static public function buildTr($comment) {
-    $str = '<div class="row" id="row'.$comment["id"].'">';
-    $str .= '<div class = "col-md-10"><div class="well well-sm">'.$comment["username"].': '.$comment["text"].'</div></div>';
-    $str .= '<div class = "col-md-2"><button class="btn btn-warning" id="'.$comment["id"].'"onclick="deleteComment(this.id)">Delete</button></div>';
+    $str = '<div class="row" id="row' . $comment["id"] . '">';
+    $str .= '<div class = "col-md-10"><div class="well well-sm">' . $comment["username"] . ': ' . $comment["text"] . '</div></div>';
+    $str .= '<div class = "col-md-2"><button class="btn btn-warning" id="' . $comment["id"] . '"onclick="deleteComment(this.id)">Delete</button></div>';
     $str .= '</div>';
     return $str;
   }
-
-
-
-
-
 
 
 

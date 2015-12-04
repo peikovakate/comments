@@ -1,27 +1,28 @@
-$(document).on("click", function(){
-    $(".row:gt(6)").hide();
-
+$(document).ready(function(){
+    check();
 })
 
 function deleteComment(id) {
     var response = confirm('Are you sure?');
     if (response == true) {
-        var idToDelete;
-        if (id == "Delete all") {
-            idToDelete = "column";
-        } else {
-            idToDelete = "row" + id;
-        }
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                document.getElementById(idToDelete).innerHTML = xhttp.responseText;
+        $.ajax({
+            type: 'POST',
+            url: '../Model/deleteComment.php',
+            data: "arg="+id,
+            success: function (data) {
+                if(id=="Delete all") {
+                    $("#column").empty();
+                    $("#column").append(data);
+                }else{
+                    $("#row"+id).remove();
+                }
+                check();
             }
-        };
-        xhttp.open("POST", "/Model/deleteComment.php?arg=" + id, true);
-        xhttp.send();
+        })
     }
+    return false;
 }
+
 
 function addComm() {
     var msg =  $("#postComment").serialize();
@@ -33,8 +34,19 @@ function addComm() {
             data = '<div class="row" id="row0"></div>' + data;
             $("#row0").replaceWith(data);
             document.getElementById("postComment").reset();
+            $("#addCommentModal").modal("hide");
+            check();
         }
 
     })
     return false;
 }
+
+var check  = function(){
+    var a = $("#column > .row").length;
+    //$("#column>.row:lt(6)").show();
+    //$("#column>.row:gt(5)").hide();
+    if (a>5){
+        ("#showLessBtn").style.display="";
+    }
+    }

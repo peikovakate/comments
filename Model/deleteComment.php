@@ -3,4 +3,8 @@
   include_once($path.'/Controller/Controller.php');
   $args = $_REQUEST['arg'];
   Controller::getControl('deleteComment', $args);
-  echo '<div class="row" id="row0"></div></div>';
+  if($args=="Delete all") {
+    echo '<div class="row" id="row0"></div>';
+  } else {
+    echo '';
+  }
