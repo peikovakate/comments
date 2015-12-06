@@ -60,8 +60,8 @@ class View
     foreach ($arrayOfComments as $c) {
       $str .= self::buildTr($c);
     }
-    $str .= '<button id="showMoreBtn" class="btn btn-default" style="display: none">Show more</button>';
-    $str .= '<button id="showLessBtn" class="btn btn-default" style="display: none">Show less</button>';
+    $str .= '<div id="showMoreBtn" class="btn btn-default" onclick="showMore()" style="display: none" >Show more</div>';
+    $str .= '<div id="showLessBtn" class="btn btn-default" onclick="showLess()">Show less</div>';
     $str .= '</div>';
       return $str;
     }

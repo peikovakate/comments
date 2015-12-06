@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    check();
+
 })
 
 function deleteComment(id) {
@@ -36,17 +36,28 @@ function addComm() {
             document.getElementById("postComment").reset();
             $("#addCommentModal").modal("hide");
             check();
+
         }
 
     })
     return false;
 }
 
-var check  = function(){
-    var a = $("#column > .row").length;
-    //$("#column>.row:lt(6)").show();
-    //$("#column>.row:gt(5)").hide();
-    if (a>5){
-        ("#showLessBtn").style.display="";
+function check(){
+    if($("#showMoreBtn").css('display')!='none') {
+        $("#column>.row:lt(6)").show();
+        $("#column>.row:gt(5)").hide();
     }
     }
+
+function showLess() {
+    $("#showLessBtn").hide();
+    $("#column>.row:gt(5)").fadeOut();
+    $("#showMoreBtn").show();
+}
+
+function  showMore(){
+    $("#column>.row:gt(5)").fadeIn();
+    $("#showMoreBtn").hide();
+    $("#showLessBtn").show();
+}
