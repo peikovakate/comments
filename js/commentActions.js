@@ -23,7 +23,7 @@
     }
 
     function addComm() {
-        var msg =  $("#postComment").serialize();
+        var msg = $("#postComment").serialize();
         $.ajax({
             type: 'POST',
             url: '../',
@@ -59,12 +59,10 @@
     function showLess() {
         $("#showLessBtn").hide();
         $("#column>.row:gt(5)").slideUp();
-        //$("#mainContainer").slideUp();
         $("#showMoreBtn").show();
     }
 
-    function  showMore(){
-       // $("#column>.row:gt(5)").fadeIn();
+    function showMore(){
         $("#column>.row:gt(5)").slideToggle();
         $("#showMoreBtn").hide();
         $("#showLessBtn").show();

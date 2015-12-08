@@ -19,14 +19,12 @@ class SqlConnection
   public static function getLastComment() {
     $sql = "SELECT * FROM comments ORDER BY id DESC LIMIT 0, 1";
     $result = self::getConnection()->query($sql);
-    $a = $result->fetch_row();
-    $a = $a[0];
-    return $a;
+    return $result->fetch_row()[0];
   }
 
   public static function select($args) {
     $sql = '';
-    if ($args=='all'){
+    if ($args == 'all'){
       $sql .= "SELECT * FROM comments ORDER BY id DESC";
     }else{
       $sql .= "SELECT * FROM comments ORDER BY id DESC LIMIT 0, 1";
@@ -36,7 +34,7 @@ class SqlConnection
   }
 
   public static function delete($args) {
-    if ($args=="Delete all"){
+    if ($args == "Delete all"){
       $sql = "DELETE FROM comments;";
     }else {
       $sql = "DELETE FROM comments WHERE id = ".$args." ;";
