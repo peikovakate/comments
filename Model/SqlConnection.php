@@ -10,9 +10,9 @@ class SqlConnection
     }
     return self::$conn;
   }
+
   public static function add($args) {
-    $sql = "INSERT INTO comments (username, text)
-        VALUES ('$args[1]', '$args[0]')";
+    $sql = 'INSERT INTO comments (username, text) VALUES ("'.$args['username'].'", "'.$args['text'].'");';
     self::getConnection()->query($sql);
   }
 

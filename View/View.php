@@ -1,5 +1,4 @@
 <?php
-
 class View
 {
   static public function run($arrayOfComments) {
@@ -23,7 +22,7 @@ class View
 
   static private function buildBody($arrayOfComments) {
     $body = '<body>';
-    $body .= '<div class="container">';
+    $body .= '<div id="mainContainer" class="container">';
     $body .= '<div class="panel panel-success">';
     $body .= '<h3 div class="panel-heading">Add your comment here!</h3><div>';
     $body .= '<div class="panel-body">';
