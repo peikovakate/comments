@@ -17,12 +17,13 @@
       echo View::run($arrayOfComments);
   }
   function addComment() {
-//    $request = \Slim\Slim::getInstance()->request();
-//    $args = ($request->getBody());
+    $request = \Slim\Slim::getInstance()->request();
+    $args = ($request->getBody());
+    parse_str($args, $args);
     $id = SqlConnection::getLastComment();
-    $comment = Array("id"=>$id, "username"=>$_POST['user_name'], "text"=>$_POST['comment']);
-    $_POST['comment'] = filter_var($comment, FILTER_SANITIZE_STRING);
-    $_POST['user_name'] = filter_var($comment, FILTER_SANITIZE_STRING);
+    $comment = Array("id"=>$id, "username"=>$args['user_name'], "text"=>$args['comment']);
+    $args['comment'] = filter_var($comment, FILTER_SANITIZE_STRING);
+    $args['user_name'] = filter_var($comment, FILTER_SANITIZE_STRING);
     SqlConnection::add($comment);
     echo View::buildTr($comment);
   }
