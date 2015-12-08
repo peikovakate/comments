@@ -1,61 +1,79 @@
 <?php
-$path = dirname(__DIR__);
-include_once $path.'/Model/ChooseSqlRequest.php';
-include_once $path.'/Model/SqlRequest.php';
-include_once $path.'/Model/SqlSelectRequest.php';
-class View {
-  static private function _form_add_comment(){
-    $form = '<form method="post" action="/comments/Model/add_comment_to_file.php" id="post_comment">';
-    $form .= '<input type="text" name="user_name" placeholder="User name" size="6">';
-    $form .= '<input type="text" style="font-family: Verdana, Arial, Helvetica, sans-serif" name="comment" placeholder="Comment..."/>';
-    $form .= '<input  type="submit" value="Send">
-     </form>';
-    return $form;
+
+class View
+{
+  static public function run($arrayOfComments) {
+    $html = self::buildHead();
+    $html .= self::buildBody($arrayOfComments);
+    return $html;
   }
 
-  static private function _form_delete_comments(){
-    $form = '<form method="post" action="/comments/Model/delete_all_comments.php" id="delete_comments">';
-    $form .= '<input  type="submit" name="delete" value="Delete">
-    </form>';
-    return $form;
-  }
-
-  static private function _build_head() {
-    $head = '<html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <title>Add Your Comment!</title>
-    </head>';
+  static private function buildHead() {
+    $head = '<html lang="en">';
+    $head .= '<head>';
+    $head .= '<script src="../lib/jquery/jquery-2.1.4.js"></script>';
+    $head .= '<link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">';
+    $head .= '<script src="../lib/bootstrap/js/bootstrap.js"></script>';
+    $head .= '<script src="../js/commentActions.js"></script>';
+    $head .= '<meta charset="UTF-8">';
+    $head .= '<title>Add Your Comment!</title>';
+    $head .= '</head>';
     return $head;
   }
 
-  static private function _build_body(){
+  static private function buildBody($arrayOfComments) {
     $body = '<body>';
-    $body .= self::_show_comments();
-    $body .= self::_form_add_comment();
-    $body .= self::_form_delete_comments();
-    $body .= '</body></html>';
+    $body .= '<div class="container">';
+    $body .= '<div class="panel panel-success">';
+    $body .= '<h3 div class="panel-heading">Add your comment here!</h3><div>';
+    $body .= '<div class="panel-body">';
+    $body .= '<div class="row">';
+    $body .= '<div class = "col-md-5">';
+    $body .= self::modalAddComment();
+    $body .= '<br>';
+    $body .= '<button id="Delete all" class="btn btn-warning" onclick="deleteComment(this.id)">Delete All</button>';
+    $body .= self::buildColumnWithComments($arrayOfComments);
+    $body .= '</div></div></div></body></html>';
     return $body;
   }
 
-  static private function _show_comment($comment){
-    return '<span style="font-weight: bold; font-family: Verdana, Arial, Helvetica, sans-serif;"> '.$comment['username'].':</span> '.$comment['text'].'<br />';
+  static private function modalAddComment() {
+    $form = '<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addCommentModal">Add your comment!</button>';
+    $form .= '<div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">';
+    $form .= '<div class="modal-dialog" role="document">';
+    $form .= '<div class="modal-content">';
+    $form .= '<div class="modal-header">';
+    $form .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+    $form .= '<h4 class="modal-title" id="addCommentModal">Fill form</h4></div>';
+    $form .= '<div class="modal-body">';
+    $form .= '<form method="post" id="postComment" onsubmit="addComm();return false;">';
+    $form .= '<input type="text" id="username" class="input-sm" name="user_name" placeholder="Username" size="6">';
+    $form .= '<input type="text" id="text" name="comment" class="input-sm" placeholder="Comment..." size="50">';
+    $form .= '<input  type="submit" value="Send" class="btn btn-success btn-sm" id="addComment">';
+    $form .= '</form></div></div></div></div>';
+    return $form;
   }
 
-  static private function _show_comments() {
-    $request = ChooseSqlRequest::choose('SqlSelectRequest');
-    $result = $request->doRequest('');
-    $str='';
-    foreach ($result as $comment) {
-      $str .= self::_show_comment($comment);
+  static private function buildColumnWithComments($arrayOfComments) {
+    $str = '</div><div class = "col-md-7" id="column">';
+    $str .= '<div class="row" id="row0"></div>';
+    foreach ($arrayOfComments as $c) {
+      $str .= self::buildTr($c);
     }
+    $str .= '<div id="showMoreBtn" class="btn btn-default" onclick="showMore()" style="display: none" >Show more</div>';
+    $str .= '<div id="showLessBtn" class="btn btn-default" onclick="showLess()">Show less</div>';
+    $str .= '</div>';
+      return $str;
+    }
+
+  static public function buildTr($comment) {
+    $str = '<div class="row" id="row' . $comment["id"] . '">';
+    $str .= '<div class = "col-md-10"><div class="well well-sm">' . $comment["username"] . ': ' . $comment["text"] . '</div></div>';
+    $str .= '<div class = "col-md-2"><button class="btn btn-warning" id="' . $comment["id"] . '"onclick="deleteComment(this.id)">Delete</button></div>';
+    $str .= '</div>';
     return $str;
   }
 
-  static public function run(){
-    $html =  self::_build_head();
-    $html .= self::_build_body();
-    return $html;
-  }
+
 
 }
