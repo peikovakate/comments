@@ -1,44 +1,51 @@
 <?php
+require(dirname(__DIR__).'/lib/Medoo-master/medoo.php');
 class SqlConnection
 {
   private static $conn;
   public static function getConnection() {
     if (null === self::$conn)
     {
-      self::$conn = new mysqli("localhost", "root", "root", "comments");
-      return self::$conn;
+      self::$conn = new medoo([
+        'database_type' => 'mysql',
+        'database_name' => 'comments',
+        'username' => 'root',
+        'password' => 'root',
+        'charset' => 'utf8'
+      ]);
     }
     return self::$conn;
   }
 
   public static function add($args) {
-    $sql = 'INSERT INTO comments (username, text) VALUES ("'.$args['username'].'", "'.$args['text'].'");';
-    self::getConnection()->query($sql);
-  }
-
-  public static function getLastComment() {
-    $sql = "SELECT * FROM comments ORDER BY id DESC LIMIT 0, 1";
-    $result = self::getConnection()->query($sql);
-    return $result->fetch_row()[0];
+    self::getConnection()->insert('comments',[
+      'username' => $args['username'],
+      'text' => $args['text']
+    ]);
   }
 
   public static function select($args) {
-    $sql = '';
     if ($args == 'all'){
-      $sql .= "SELECT * FROM comments ORDER BY id DESC";
+      return self::getConnection()->select('comments', '*', [
+          'ORDER' => ['id DESC']
+      ]);
     }else{
-      $sql .= "SELECT * FROM comments ORDER BY id DESC LIMIT 0, 1";
+      $result = self::getConnection()->select('comments', '*', [
+          'ORDER' => ['id DESC'],
+          'LIMIT' => [0,1]
+      ]);
+      return $result[0]['id'];
     }
-    $result = self::getConnection()->query($sql);
-    return $result;
+
   }
 
   public static function delete($args) {
-    if ($args == "Delete all"){
-      $sql = "DELETE FROM comments;";
+    if ($args == 'Delete all'){
+      self::getConnection()->delete('comments', '*');
     }else {
-      $sql = "DELETE FROM comments WHERE id = ".$args." ;";
+      self::getConnection()->delete('comments', [
+        'id' => $args
+      ]);
     }
-    self::getConnection()->query($sql);
   }
 }
