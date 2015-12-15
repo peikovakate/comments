@@ -33,7 +33,7 @@
     $comment['comment'] = filter_var($comment, FILTER_SANITIZE_STRING);
     $comment['user_name'] = filter_var($comment, FILTER_SANITIZE_STRING);
     SqlConnection::add($comment);
-    $str = '<div class="row" id="row' . $comment['id'] . '">';
+    $str = '<div class="row" id="row' . $comment["id"] . '">';
     $str .= '<div class = "col-md-10"><div class="well well-sm">' . $comment['username'] . ': ' . $comment['text'] . '</div></div>';
     $str .= '<div class = "col-md-2"><button class="btn btn-warning" id="' . $comment['id'] . '"onclick="deleteComment(this.id)">Delete</button></div>';
     $str .= '</div>';
