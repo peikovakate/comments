@@ -41,7 +41,7 @@ class SqlConnection
 
   public static function delete($args) {
     if ($args == 'Delete all'){
-      self::getConnection()->delete('comments', '*');
+      self::getConnection()->delete('comments', []);
     }else {
       self::getConnection()->delete('comments', [
         'id' => $args
